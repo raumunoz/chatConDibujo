@@ -1,0 +1,110 @@
+body{
+    color:#fff;
+    font-family: 'Nunito Semibold';
+    text-align:center;
+
+}
+.contenedor{
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    grid-auto-rows: minmax(100px,auto);
+    grid-auto-columns: minmax(600px,auto);
+    grid-template-areas: 'encabezado encabezado encabezado encabezado encabezado encabezado'
+    'dibujo dibujo dibujo dibujo dibujo dibujo'
+    'dibujo dibujo dibujo dibujo dibujo dibujo'
+    'chat chat chat chat  usuarios usuarios '
+    'chat chat chat chat  usuarios usuarios '
+    
+    'input input input input input input'
+    'pie pie pie pie pie pie'
+    ;
+    grid-gap:10px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+@media screen and (min-width:1500px){
+.contenedor{
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    grid-auto-rows: minmax(100px,auto);
+    grid-auto-columns: minmax(600px,auto);
+    grid-template-areas: 'encabezado encabezado encabezado encabezado encabezado encabezado'
+    'dibujo dibujo dibujo  chat chat usuarios'
+    'dibujo dibujo dibujo  chat chat usuarios'
+    'dibujo dibujo dibujo  input input usuarios'
+    'pie pie pie pie pie pie'
+    ;
+    grid-gap:10px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+}
+
+.contenedor > *{
+    background: #3bbced;
+     padding: 30px;
+    /* margin: 20px;*/
+}
+#encabezado{
+    /*grid-column: 1/13;*/
+    grid-area: encabezado;
+}
+#dibujo{
+     /*grid-column: 1/13;
+    grid-row:2/4;*/
+    padding-top: 30px;
+    grid-area: dibujo;
+}
+#chat{
+    /* grid-column: 1/9;*/
+    padding: 0;
+    grid-area: chat;
+    height: 200px;
+    overflow: auto;
+ }
+@media screen and (min-width:1500px){
+#chat{
+   /* grid-column: 1/9;*/
+   padding: 0;
+   grid-area: chat;
+   height: 400px;
+   overflow: auto;
+
+}
+}
+#input{
+    /*grid-column: 9/13;*/
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    background-color: palegreen;
+    grid-area: input;
+}
+#Itexto{
+    grid-column: span 4;
+    height:2em;
+}
+#Ibotton{
+    grid-column: span 1;
+    height:2.5em;
+}
+#pie{
+    /*grid-column: 1/13;*/
+    background-color: orange;
+    grid-area: pie;
+}
+#usuarios{
+    grid-area: usuarios; 
+    background-color:red;
+    height: 200px;
+    overflow: auto;
+    
+}
+tr{
+    background-color:black;
+}
+th{
+    background-color:gold;
+}
+tr:nth-child(2n+0) {
+    background: red;
+}

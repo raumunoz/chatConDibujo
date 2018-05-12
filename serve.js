@@ -16,7 +16,10 @@ io.sockets.on('connection',newConnection);
 function newConnection(socket){
     /*socket id es la id de la conexion */
     console.log('new connection: '+ socket.id);
-    socket.broadcast.emit('usuario',socket.id)
+    socket.emit('usuario local', socket.id);
+    /*numero de clientes */
+    //console.log(io.sockets.sockets.length);
+    socket.broadcast.emit('usuario Nuevo',socket.id)<
    // socket.emit('usario',socket.id);
     socket.on('disconnect', function(){
         console.log('user disconnected '+socket.id);
@@ -26,9 +29,13 @@ function newConnection(socket){
         socket.broadcast.emit('mouse',data);
     });
     socket.on('mensaje chat', (msg)=>{
-        console.log('mensaje a recibido a el servidor' + msg);
-        io.emit('mensaje chat', msg);
-        console.log('mensaje a enviar desde el servidor' + msg);
+        
+        io.emit('mensaje chat', {
+            usuario:socket.id,
+            mensaje:msg
+        });
+        
       });
+     
    
 }

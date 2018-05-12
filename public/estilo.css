@@ -52,7 +52,7 @@ body{
 #dibujo{
      /*grid-column: 1/13;
     grid-row:2/4;*/
-    padding-top: 30px;
+    padding: 0;
     grid-area: dibujo;
 }
 #chat{
@@ -78,14 +78,18 @@ body{
     grid-template-columns: repeat(5,1fr);
     background-color: palegreen;
     grid-area: input;
+    height: 200px;
+    padding: 0%;
 }
+
 #Itexto{
     grid-column: span 4;
-    height:2em;
 }
 #Ibotton{
     grid-column: span 1;
-    height:2.5em;
+}
+#input > *{
+    margin: 60px 0px 60px 0px;
 }
 #pie{
     /*grid-column: 1/13;*/
@@ -95,9 +99,21 @@ body{
 #usuarios{
     grid-area: usuarios; 
     background-color:red;
+   
+    padding: 0;
     height: 200px;
     overflow: auto;
     
+}
+@media screen and (min-width:1500px){
+#usuarios{
+    grid-area: usuarios; 
+    background-color:red;
+    height: initial;
+    height: 600px;
+    overflow: auto;
+    
+}
 }
 tr{
     background-color:black;

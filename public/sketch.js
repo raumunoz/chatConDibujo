@@ -7,6 +7,7 @@ let ulUsuarios;
 let usuarios=new Array;
 let li;
 let h1;
+let nombreUsuario;
 /*var ul = document.getElementById("list");
   var li = document.createElement("li");
   li.appendChild(document.createTextNode("Four"));
@@ -26,13 +27,18 @@ background(51);
 
 socket=io.connect('http://localhost:3000');
 socket.on('mouse', newDrw);
-socket.on('usuario', nuevoUsuario);
+socket.on('usuario Nuevo', nuevoUsuario);
 socket.on('mensaje chat',agregarMensaje);
+socket.on('usuario local',definirUsuarioLocal);
 /*socket.on('mensaje', agregarMensaje);*/
 document.getElementById("IbottonGuardar").onclick = guardarImagen;
 document.getElementById("IbottonEnviar").onclick = enviarMensaje;
 tablaChat=document.getElementById("tablaChat");
 divChat=document.getElementById("chat");
+}
+function definirUsuarioLocal(data){
+    nombreUsuario=data;
+    console.log("Usuario local"+ nombreUsuario);
 }
 function newDrw(data){
     noStroke();
@@ -40,8 +46,11 @@ function newDrw(data){
     ellipse(data.x,data.y,25,25);
 }
 function nuevoUsuario(data){
-    console.log('ser recibio el nuevo usuario '+data);
-    usuarios.push(data);
+    let cad;
+    cad = data.substring(0,5);
+    console.log('nuevo reducido'+cad);
+    usuarios.push(cad);
+   
     actualizarUlUsuarios();
 }
 function actualizarUlUsuarios(){
@@ -92,16 +101,16 @@ function enviarMensaje(){
         socket.emit('mensaje chat',mensaje);
     }
 }
-function agregarMensaje(mensaje){
-    console.log("mensaje recibido en el cliente"+ mensaje);
-    if (mensaje!='') {
-        console.log("mensaje recibido"+ mensaje);
+function agregarMensaje(datos){
+    console.log("mensaje recibido en el cliente"+ datos.mensaje);
+    if (datos.mensaje!='') {
+        console.log("mensaje recibido"+ datos.mensaje);
         //let row = tablaChat.insertRow(0);
         let row=tablaChat.insertRow(tablaChat.rows.length );
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
-        cell1.innerHTML = mensaje;
-        cell2.innerHTML = "anonimo";
+        cell1.innerHTML = datos.mensaje;
+        cell2.innerHTML = datos.usuario;
         //divChat.scrollTop=0;  
         divChat.scrollTop = divChat.scrollHeight;
        

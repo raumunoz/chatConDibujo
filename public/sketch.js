@@ -4,10 +4,11 @@ let mensajeAenviar;
 let tablaChat;
 let divChat;
 let ulUsuarios;
-let usuarios=new Array;
+
 let li;
 let h1;
 let nombreUsuario;
+let room;
 /*var ul = document.getElementById("list");
   var li = document.createElement("li");
   li.appendChild(document.createTextNode("Four"));
@@ -16,9 +17,10 @@ function setup() {
 /*var c = createCanvas(100, 100);
 background(255, 0, 0);
 saveCanvas(c, 'myCanvas', 'jpg');*/
-usuarios[0]="toño";
+
 //createElement('ul').id('listaUsuarios').parent('usuarios');
 //h1 = createElement('h1','un h1 cualquiera');
+room='chat1';
 ulUsuarios=document.getElementById("listaUsuarios");
 
 myCanvas=createCanvas(600,400);
@@ -30,11 +32,18 @@ socket.on('mouse', newDrw);
 socket.on('usuario Nuevo', nuevoUsuario);
 socket.on('mensaje chat',agregarMensaje);
 socket.on('usuario local',definirUsuarioLocal);
+socket.on('connection',unirAchat);
+socket.on('actualizar usuarios',actualizarUlUsuarios);
+
 /*socket.on('mensaje', agregarMensaje);*/
 document.getElementById("IbottonGuardar").onclick = guardarImagen;
 document.getElementById("IbottonEnviar").onclick = enviarMensaje;
 tablaChat=document.getElementById("tablaChat");
 divChat=document.getElementById("chat");
+}
+function unirAchat(){
+    console.log("el cliente se quiere unir ");
+    socket.emit('unir chat', room);
 }
 function definirUsuarioLocal(data){
     nombreUsuario=data;
@@ -53,7 +62,7 @@ function nuevoUsuario(data){
    
     actualizarUlUsuarios();
 }
-function actualizarUlUsuarios(){
+function actualizarUlUsuarios(usuarios){
     while(ulUsuarios.firstChild) ulUsuarios.removeChild(ulUsuarios.firstChild);
     for (  usuario of usuarios) {
     li = document.createElement("li");
@@ -62,11 +71,7 @@ function actualizarUlUsuarios(){
    }
     
 }
-function draw(){
-   
-   
 
-}
 function mouseDragged(){
     console.log('mandando '+(mouseX | 0)+','+(mouseY | 0));
     var data={

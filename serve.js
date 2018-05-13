@@ -8,7 +8,8 @@ let server=app.listen(3000);
 let io=socket(server);
 let clients;
 let numClients;
-
+let nombreClientes=[];
+let roomLocal;
 /*para hostear static files */
 
 app.use(express.static('public'));
@@ -23,11 +24,12 @@ function newConnection(socket){
     socket.emit('connection');
     /*numero de clientes */
     //console.log(io.sockets.sockets.length);
-    socket.broadcast.emit('usuario Nuevo',socket.id);
+   // socket.broadcast.emit('usuario Nuevo',socket.id);
    // socket.emit('usario',socket.id);
    
    socket.on('unir chat',(room)=>{
-    let nombreClientes=[];
+     nombreClientes=[];
+     roomLocal=room;
     console.log("se quiere unir "+ room);
     socket.join(room);
     clients = io.sockets.adapter.rooms[room].sockets;
@@ -57,7 +59,9 @@ function newConnection(socket){
 io.to(room).emit('actualizar usuarios', nombreClientes);
   });
     socket.on('disconnect', function(){
-        console.log('user disconnected '+socket.id);
+        nombreClientes = nombreClientes.filter(item => item !== socket.id);
+        io.to(roomLocal).emit('actualizar usuarios', nombreClientes);
+        //console.log('user disconnected '+socket.id);
       });
     socket.on('mouse',(data)=>{
         console.log(data);

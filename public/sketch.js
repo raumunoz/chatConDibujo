@@ -29,7 +29,6 @@ background(51);
 
 socket=io.connect('http://localhost:3000');
 socket.on('mouse', newDrw);
-socket.on('usuario Nuevo', nuevoUsuario);
 socket.on('mensaje chat',agregarMensaje);
 socket.on('usuario local',definirUsuarioLocal);
 socket.on('connection',unirAchat);
@@ -54,14 +53,7 @@ function newDrw(data){
     fill(255,0,100);
     ellipse(data.x,data.y,25,25);
 }
-function nuevoUsuario(data){
-    let cad;
-    cad = data.substring(0,5);
-    console.log('nuevo reducido'+cad);
-    usuarios.push(cad);
-   
-    actualizarUlUsuarios();
-}
+
 function actualizarUlUsuarios(usuarios){
     while(ulUsuarios.firstChild) ulUsuarios.removeChild(ulUsuarios.firstChild);
     for (  usuario of usuarios) {

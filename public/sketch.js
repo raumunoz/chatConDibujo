@@ -9,22 +9,25 @@ let li;
 let h1;
 let nombreUsuario;
 let room;
-/*var ul = document.getElementById("list");
-  var li = document.createElement("li");
-  li.appendChild(document.createTextNode("Four"));
-  ul.appendChild(li);*/
+let canvasPrecionado=false ;
 function setup() {
-/*var c = createCanvas(100, 100);
-background(255, 0, 0);
-saveCanvas(c, 'myCanvas', 'jpg');*/
 
-//createElement('ul').id('listaUsuarios').parent('usuarios');
-//h1 = createElement('h1','un h1 cualquiera');
 room='chat1';
 ulUsuarios=document.getElementById("listaUsuarios");
 
 myCanvas=createCanvas(600,400);
 myCanvas.parent("canvasDibujo");
+//myCanvas.mouseMoved(()=>console.log("dentro del canvas"));
+myCanvas.mousePressed(()=>{
+    canvasPrecionado=true;
+    console.log("el mause se preciono");
+});
+myCanvas.mouseReleased(()=>{
+    console.log("el mause se soltó");
+    
+});
+myCanvas.mouseOut(()=>canvasPrecionado=false);
+//myCanvas.mouseMoved(dibuja);
 background(51);
 
 socket=io.connect('http://localhost:3000');
@@ -34,7 +37,6 @@ socket.on('usuario local',definirUsuarioLocal);
 socket.on('connection',unirAchat);
 socket.on('actualizar usuarios',actualizarUlUsuarios);
 
-/*socket.on('mensaje', agregarMensaje);*/
 document.getElementById("IbottonGuardar").onclick = guardarImagen;
 document.getElementById("IbottonEnviar").onclick = enviarMensaje;
 tablaChat=document.getElementById("tablaChat");
@@ -65,15 +67,21 @@ function actualizarUlUsuarios(usuarios){
 }
 
 function mouseDragged(){
-    console.log('mandando '+(mouseX | 0)+','+(mouseY | 0));
+   if(canvasPrecionado){
     var data={
         x:mouseX,
         y:mouseY
     }
+        console.log('mandando '+(mouseX | 0)+','+(mouseY | 0));
+    
     socket.emit('mouse',data);
     noStroke();
     fill(255);
-    ellipse(mouseX,mouseY,25,25);
+    ellipse(mouseX,mouseY,25,25); 
+
+   }
+       
+    
 }
 
 

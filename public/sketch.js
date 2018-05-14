@@ -31,7 +31,7 @@ myCanvas.mouseOut(()=>canvasPrecionado=false);
 //myCanvas.mouseMoved(dibuja);
 background(51);
 //socket=io.connect('http://localhost:3000/');
-socket=io.connect('https://glacial-fortress-88770.herokuapp.com/');
+socket=io.connect('https://chatderau.herokuapp.com/');
 socket.on('mouse', newDrw);
 socket.on('mensaje chat',agregarMensaje);
 socket.on('usuario local',definirUsuarioLocal);

@@ -4,6 +4,7 @@ body{
     text-align:center;
 
 }
+
 .contenedor{
     display: grid;
     grid-template-columns: repeat(6,1fr);
@@ -41,12 +42,13 @@ body{
 }
 
 .contenedor > *{
-    background: #3bbced;
+    
      padding: 30px;
     /* margin: 20px;*/
 }
 #encabezado{
     /*grid-column: 1/13;*/
+    height:50px;
     grid-area: encabezado;
 }
 #dibujo{
@@ -76,7 +78,7 @@ body{
     /*grid-column: 9/13;*/
     display: grid;
     grid-template-columns: repeat(5,1fr);
-    background-color: palegreen;
+  
     grid-area: input;
     height: 200px;
     padding: 0%;
@@ -93,12 +95,12 @@ body{
 }
 #pie{
     /*grid-column: 1/13;*/
-    background-color: orange;
+    
     grid-area: pie;
 }
 #usuarios{
     grid-area: usuarios; 
-    background-color:red;
+    
    
     padding: 0;
     height: 200px;
@@ -108,7 +110,7 @@ body{
 @media screen and (min-width:1500px){
 #usuarios{
     grid-area: usuarios; 
-    background-color:red;
+    
     height: initial;
     height: 600px;
     overflow: auto;
@@ -116,11 +118,28 @@ body{
 }
 }
 tr{
-    background-color:black;
+    background-color:#757575;
+    color: white;
 }
 th{
     background-color:gold;
 }
 tr:nth-child(2n+0) {
-    background: red;
+    background: #E0E0E0;
+    color: black;
+}
+td:nth-child(2n+0){
+    width: 20%;
+}
+.primario{
+    background-color: #00695C;
+}
+.primarioClaro{
+    background-color: #26A69A;
+}
+.secundario{
+    background-color: #F57C00;
+}
+.secundarioClaro{
+    background-color: #FFA726;
 }

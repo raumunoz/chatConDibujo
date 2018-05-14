@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>sockets con node</title>
+    <title>chat dibujo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="estilo.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.js"></script>
@@ -16,30 +16,30 @@
 <body>
 
     <div class="contenedor">
-        <div id="encabezado">encabezado</div>
-        <div id="dibujo">
-            <div id="canvasDibujo"></div>
+        <div id="encabezado" class="primario"><h1>chat con dibujo</h1></div>
+        <div id="dibujo" class="primarioClaro">
+            <div id="canvasDibujo" ></div>
             <div><input type="button" value="guardar" id="IbottonGuardar" onclick="guardarImagen();"></div>
             
         </div>
-        <div id="chat">
+        <div id="chat" class="secundario">
             <table style="width:100%" id="tablaChat">
                 <tr>
                     
                 </tr>
             </table>
         </div>
-        <div id="input">
-            <textarea rows="4" cols="25" id="Itexto">
+        <div id="input" class="primarioClaro">
+            <textarea rows="4" cols="10" id="Itexto" >
                
                 </textarea>
             <input type="button" value="enviar" id="IbottonEnviar" onclick="enviarMensaje();">
         </div>
-        <div id="usuarios">
+        <div id="usuarios"  class="secundarioClaro">
             <ul id="listaUsuarios">
             </ul>
         </div>
-        <div id="pie">pie</div>
+        <div id="pie" class="secundarioClaro">pie</div>
     </div>
     texto de usar
 </body>

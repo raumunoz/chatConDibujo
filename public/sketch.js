@@ -30,7 +30,7 @@ myCanvas.mouseReleased(()=>{
 myCanvas.mouseOut(()=>canvasPrecionado=false);
 //myCanvas.mouseMoved(dibuja);
 background(51);
-
+//socket=io.connect('http://localhost:3000/');
 socket=io.connect('https://glacial-fortress-88770.herokuapp.com/');
 socket.on('mouse', newDrw);
 socket.on('mensaje chat',agregarMensaje);
@@ -61,7 +61,7 @@ function actualizarUlUsuarios(usuarios){
     while(ulUsuarios.firstChild) ulUsuarios.removeChild(ulUsuarios.firstChild);
     for (  usuario of usuarios) {
     li = document.createElement("li");
-    li.appendChild(document.createTextNode(usuario));
+    li.appendChild(document.createTextNode(usuario.substring(0,5)));
     ulUsuarios.appendChild(li);
    }
     
@@ -116,7 +116,7 @@ function agregarMensaje(datos){
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
         cell1.innerHTML = datos.mensaje;
-        cell2.innerHTML = datos.usuario;
+        cell2.innerHTML = datos.usuario.substring(0,5);
         //divChat.scrollTop=0;  
         divChat.scrollTop = divChat.scrollHeight;
        

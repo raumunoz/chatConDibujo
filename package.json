@@ -2,8 +2,9 @@
   "name": "websocktes",
   "version": "1.0.0",
   "description": "ejercicio de sockets",
-  "main": "codigo.js",
+  "main": "serve.js",
   "scripts": {
+    "start": "node serve.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "rau",

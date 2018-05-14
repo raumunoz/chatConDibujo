@@ -15,7 +15,8 @@ function setup() {
 room='chat1';
 ulUsuarios=document.getElementById("listaUsuarios");
 
-myCanvas=createCanvas(400,600);
+//myCanvas=createCanvas(273,433);
+myCanvas=createCanvas(270,270);
 myCanvas.parent("canvasDibujo");
 //myCanvas.mouseMoved(()=>console.log("dentro del canvas"));
 myCanvas.mousePressed(()=>{

@@ -4,7 +4,7 @@ console.log("mi servidor de server está corriendo");
 let express=require('express');
 let socket=require('socket.io');
 let app=express();
-let port=process.env.PORT || 8080;
+let port=process.env.PORT || 3000;
 let server=app.listen(port);
 let io=socket(server);
 let clients;

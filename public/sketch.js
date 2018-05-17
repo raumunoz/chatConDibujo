@@ -10,6 +10,7 @@ let h1;
 let nombreUsuario;
 let room;
 let canvasPrecionado=false ;
+
 function setup() {
 
 room='chat1';
@@ -30,8 +31,8 @@ myCanvas.mouseReleased(()=>{
 myCanvas.mouseOut(()=>canvasPrecionado=false);
 //myCanvas.mouseMoved(dibuja);
 background(51);
-//socket=io.connect('http://localhost:3000/');
-socket=io.connect('https://glacial-fortress-88770.herokuapp.com/');
+socket=io.connect('http://localhost:3000/');
+//socket=io.connect('https://glacial-fortress-88770.herokuapp.com/');
 socket.on('mouse', newDrw);
 socket.on('mensaje chat',agregarMensaje);
 socket.on('usuario local',definirUsuarioLocal);
@@ -54,7 +55,7 @@ function definirUsuarioLocal(data){
 function newDrw(data){
     noStroke();
     fill(255,0,100);
-    ellipse(data.x,data.y,25,25);
+    ellipse(data.x,data.y,15,15);
 }
 
 function actualizarUlUsuarios(usuarios){
@@ -78,7 +79,7 @@ function mouseDragged(){
     socket.emit('mouse',data);
     noStroke();
     fill(255);
-    ellipse(mouseX,mouseY,25,25); 
+    ellipse(mouseX,mouseY,15,15); 
 
    }
        
@@ -94,7 +95,11 @@ function enviarMensaje(){
     
     
     let mensaje=document.getElementById('Itexto').value;
+
     if (mensaje!='') {
+        if(mensaje.length>12){
+            mensaje=separarCadena(12,mensaje)
+        }
         console.log("mensaje a enviar "+ mensaje);
         //let row = tablaChat.insertRow(0);
        /* let row=tablaChat.insertRow(tablaChat.rows.length );
@@ -121,6 +126,27 @@ function agregarMensaje(datos){
         divChat.scrollTop = divChat.scrollHeight;
        
     }
+}
+function separarCadena(l,cadena){
+    //console.log("entro alal funcion");
+    let cadenaMejorada=""
+    mitadA=cadena.substring(0,l);
+    mitadA=mitadA+" \n"
+    mitadB=cadena.substring(l,cadena.length);
+    //console.log("la cadena b es: "+mitadB);
+    cadenaMejorada=mitadA;
+    let CadTemp="";
+    while(mitadB.length>l){
+        if(mitadB.length>l){
+           
+            CadTemp=mitadB.substring(0,l);
+            CadTemp=CadTemp+ " \n";
+            cadenaMejorada=cadenaMejorada+CadTemp;
+            mitadB=mitadB.substring(l,mitadB.length);
+            console.log(cadenaMejorada);
+        }
+    }
+    return cadenaMejorada;
 }
 /*function agregarMensaje(data){
     tabla =document.getElementById("tablaChat").onclick = guardarImagen;

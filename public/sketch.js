@@ -12,25 +12,32 @@ let room;
 let canvasPrecionado=false ;
 let btnEntrar;
 let ingresearUsuario;
+let Contenedorentrar;
+
 function setup() {
 
 room='chat1';
 ulUsuarios=document.getElementById("listaUsuarios");
 btnEntrar = document.getElementById("entrar");
+Contenedorentrar = document.getElementById("Contenedorentrar");
 ingresearUsuario = document.getElementById("ingresarUsuario");
 //myCanvas=createCanvas(273,433);
-myCanvas=createCanvas(270,270);
+myCanvas=createCanvas(300,300);
 myCanvas.parent("canvasDibujo");
 //myCanvas.mouseMoved(()=>console.log("dentro del canvas"));
 myCanvas.mousePressed(()=>{
+    document.body.style.overflow="hidden";
     canvasPrecionado=true;
     console.log("el mause se preciono");
 });
 myCanvas.mouseReleased(()=>{
     console.log("el mause se soltó");
-    
+    document.body.style.overflow="auto";
 });
-myCanvas.mouseOut(()=>canvasPrecionado=false);
+myCanvas.mouseOut(()=>{
+    document.body.style.overflow="auto";
+    canvasPrecionado=false
+});
 //myCanvas.mouseMoved(dibuja);
 background(51);
 socket=io.connect('http://localhost:3000/');
@@ -151,9 +158,15 @@ function separarCadena(l,cadena){
     return cadenaMejorada;
 }
 
-function entrar(){
+function nuevoUsuario(){
     btnEntrar.style.background = "#ff00ff";
-    ingresearUsuario.style.display = "none";
+    if(ingresearUsuario.value == ""){
+        alert('ingresa un usario');
+    }else{
+        Contenedorentrar.style.display = "none";
+    }
+    
+    
 }
 
 /*function agregarMensaje(data){

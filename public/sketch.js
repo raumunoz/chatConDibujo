@@ -10,12 +10,14 @@ let h1;
 let nombreUsuario;
 let room;
 let canvasPrecionado=false ;
-
+let btnEntrar;
+let ingresearUsuario;
 function setup() {
 
 room='chat1';
 ulUsuarios=document.getElementById("listaUsuarios");
-
+btnEntrar = document.getElementById("entrar");
+ingresearUsuario = document.getElementById("ingresarUsuario");
 //myCanvas=createCanvas(273,433);
 myCanvas=createCanvas(270,270);
 myCanvas.parent("canvasDibujo");
@@ -148,6 +150,12 @@ function separarCadena(l,cadena){
     }
     return cadenaMejorada;
 }
+
+function entrar(){
+    btnEntrar.style.background = "#ff00ff";
+    ingresearUsuario.style.display = "none";
+}
+
 /*function agregarMensaje(data){
     tabla =document.getElementById("tablaChat").onclick = guardarImagen;
 }*/

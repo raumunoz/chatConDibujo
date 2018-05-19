@@ -52,8 +52,8 @@ function newConnection(socket) {
     function mostrarDatos(){
         chat.find().limit(100).sort({_id:1}).toArray(function(err,res){
             assert.equal(err,null);
-            console.log("se encotraron los siguentes documentos");
-            console.log(res);
+            //console.log("se encotraron los siguentes documentos");
+            //console.log(res);
             socket.emit('salida',res);
         });
     }
@@ -65,24 +65,20 @@ function newConnection(socket) {
     socket.on('unir chat', (room) => {
         nombreClientes = [];
         roomLocal = room;
-        console.log("se quiere unir " + room);
+        //console.log("se quiere unir " + room);
         socket.join(room);
         clients = io.sockets.adapter.rooms[room].sockets;
         numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
-
-        console.log("Numero de clientes " + numClients);
-        //socket.emit('actualiza clientes',);
-        /*nombreClientes=clients.map((x)=>{
-            io.sockets.connected[x].id;
-        })*/
-
+        //console.log("Numero de clientes " + numClients);
         for (var clientId in clients) {
-            console.log("cliente id " + clientId);
+            //console.log("cliente id " + clientId);
             //this is the socket of each client in the room.
             var clientSocket = io.sockets.connected[clientId];
-
-
-            nombreClientes.push(clientSocket.id);
+            
+                console.log("nombre de usarui es -----------------"+clientSocket.username);
+           
+            
+            nombreClientes.push(clientSocket.username);
             //console.log("clientes "+clientSocket.id);
             //you can do whatever you need with this
             //clientSocket.emit('new event', "Updates");
@@ -111,13 +107,13 @@ function newConnection(socket) {
         })
     })
     socket.on('mensaje chat', (msg) => {
-        let nombre = socket.id;
+        let nombre = socket.username;
         let mensaje = msg;
         chat.insert({ nombre: nombre, mensaje: mensaje }, function () {
             io.emit('mensaje chat', {
-                usuario: socket.id,
-                mensaje: msg
-
+                usuario: nombre,
+                mensaje: mensaje
+                
             });
             sendStatus({
                 message: "mesage sent",
@@ -126,6 +122,9 @@ function newConnection(socket) {
 
         })
 
+    });
+    socket.on('ingresar usuario',(data)=>{
+        socket.username = data;
     });
     /*codigo para la base de datos*/
     sendStatus = function (s) {

@@ -15,7 +15,8 @@ let ingresearUsuario;
 let Contenedorentrar;
 
 function setup() {
-
+document.getElementById("Itexto").disabled = true;
+document.getElementById("IbottonEnviar").disabled=true;
 room='chat1';
 ulUsuarios=document.getElementById("listaUsuarios");
 btnEntrar = document.getElementById("entrar");
@@ -28,10 +29,10 @@ myCanvas.parent("canvasDibujo");
 myCanvas.mousePressed(()=>{
     document.body.style.overflow="hidden";
     canvasPrecionado=true;
-    console.log("el mause se preciono");
+    //console.log("el mause se preciono");
 });
 myCanvas.mouseReleased(()=>{
-    console.log("el mause se soltó");
+    //console.log("el mause se soltó");
     document.body.style.overflow="auto";
 });
 myCanvas.mouseOut(()=>{
@@ -55,18 +56,17 @@ divChat=document.getElementById("chat");
 }
 function unirAchat(){
     console.log("el cliente se quiere unir ");
-    socket.emit('unir chat', room);
+    //socket.emit('unir chat', room);
 }
 function definirUsuarioLocal(data){
     nombreUsuario=data;
-    console.log("Usuario local"+ nombreUsuario);
+    //console.log("Usuario local"+ nombreUsuario);
 }
 function newDrw(data){
     noStroke();
     fill(255,0,100);
     ellipse(data.x,data.y,15,15);
 }
-
 function actualizarUlUsuarios(usuarios){
     while(ulUsuarios.firstChild) ulUsuarios.removeChild(ulUsuarios.firstChild);
     for (  usuario of usuarios) {
@@ -76,14 +76,13 @@ function actualizarUlUsuarios(usuarios){
    }
     
 }
-
 function mouseDragged(){
    if(canvasPrecionado){
     var data={
         x:mouseX,
         y:mouseY
     }
-        console.log('mandando '+(mouseX | 0)+','+(mouseY | 0));
+        //console.log('mandando '+(mouseX | 0)+','+(mouseY | 0));
     
     socket.emit('mouse',data);
     noStroke();
@@ -94,8 +93,6 @@ function mouseDragged(){
        
     
 }
-
-
 function guardarImagen(){
     
     saveCanvas(myCanvas,'imagenDelChat','jpg');
@@ -109,7 +106,7 @@ function enviarMensaje(){
         if(mensaje.length>12){
             mensaje=separarCadena(12,mensaje)
         }
-        console.log("mensaje a enviar "+ mensaje);
+        //console.log("mensaje a enviar "+ mensaje);
         //let row = tablaChat.insertRow(0);
        /* let row=tablaChat.insertRow(tablaChat.rows.length );
         let cell1 = row.insertCell(0);
@@ -122,9 +119,9 @@ function enviarMensaje(){
     }
 }
 function agregarMensaje(datos){
-    console.log("mensaje recibido en el cliente"+ datos.mensaje);
+   // console.log("mensaje recibido en el cliente"+ datos.mensaje);
     if (datos.mensaje!='') {
-        console.log("mensaje recibido"+ datos.mensaje);
+        //console.log("mensaje recibido"+ datos.mensaje);
         //let row = tablaChat.insertRow(0);
         let row=tablaChat.insertRow(tablaChat.rows.length );
         let cell1 = row.insertCell(0);
@@ -152,21 +149,22 @@ function separarCadena(l,cadena){
             CadTemp=CadTemp+ " \n";
             cadenaMejorada=cadenaMejorada+CadTemp;
             mitadB=mitadB.substring(l,mitadB.length);
-            console.log(cadenaMejorada);
+            //console.log(cadenaMejorada);
         }
     }
     return cadenaMejorada;
 }
-
 function nuevoUsuario(){
     btnEntrar.style.background = "#ff00ff";
     if(ingresearUsuario.value == ""){
         alert('ingresa un usario');
     }else{
-        Contenedorentrar.style.display = "none";
+        document.getElementById("Itexto").disabled = false;
+        document.getElementById("IbottonEnviar").disabled=false;
+        socket.emit('ingresar usuario',ingresearUsuario.value);
+        socket.emit('unir chat', room);
+        Contenedorentrar.style.display = "none";  
     }
-    
-    
 }
 
 /*function agregarMensaje(data){

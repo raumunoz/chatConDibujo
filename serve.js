@@ -11,7 +11,8 @@ let port = process.env.PORT || 3000;
 let server = app.listen(port);
 let io = socket(server);
 //nombre y url de la base de datos
-const url = 'mongodb://127.0.0.1/websockets';
+//const url = 'mongodb://127.0.0.1/websockets';
+const url = 'mongodb://chatderau.herokuapp.com/websockets';
 const dbName = 'mongoChat';
 
 let clients;

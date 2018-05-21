@@ -47,8 +47,11 @@ socket.on('mouse', newDrw);
 socket.on('mensaje chat',agregarMensaje);
 socket.on('usuario local',definirUsuarioLocal);
 socket.on('connection',unirAchat);
+socket.on('salida',mensajesPrevios);
 socket.on('actualizar usuarios',actualizarUlUsuarios);
-
+/*socket.on('salida',function(data){
+    console.log(data);
+});*/
 document.getElementById("IbottonGuardar").onclick = guardarImagen;
 document.getElementById("IbottonEnviar").onclick = enviarMensaje;
 tablaChat=document.getElementById("tablaChat");
@@ -127,7 +130,7 @@ function agregarMensaje(datos){
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
         cell1.innerHTML = datos.mensaje;
-        cell2.innerHTML = datos.usuario.substring(0,5);
+        cell2.innerHTML = datos.usuario.substring(0,6);
         //divChat.scrollTop=0;  
         divChat.scrollTop = divChat.scrollHeight;
        
@@ -165,6 +168,18 @@ function nuevoUsuario(){
         socket.emit('unir chat', room);
         Contenedorentrar.style.display = "none";  
     }
+}
+function mensajesPrevios(data){
+    //console.log("mensaje   ++++++++++++"+data[1].usuario);
+    
+        if(data.length){
+            for (let x = 0; x < data.length; x++) {
+                
+                agregarMensaje(data[x]);
+            }
+        }
+        
+   
 }
 
 /*function agregarMensaje(data){

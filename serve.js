@@ -30,7 +30,7 @@ io.sockets.on('connection', newConnection);
 function newConnection(socket) {
 
     /*socket id es la id de la conexion */
-    console.log('new connection: ' + socket.id);
+    //console.log('new connection: ' + socket.id);
     socket.emit('usuario local', socket.id);
     socket.emit('connection');
     /*numero de clientes */
@@ -42,20 +42,20 @@ function newConnection(socket) {
         if (err) {
             throw err;
         }
+        
         console.log("Connected successfully to server");
-        
-        mostrarDatos();
-        
-        
-    
     });
     function mostrarDatos(){
         chat.find().limit(100).sort({_id:1}).toArray(function(err,res){
             assert.equal(err,null);
-            //console.log("se encotraron los siguentes documentos");
-            //console.log(res);
+            console.log("datos a enviar"+res);
             socket.emit('salida',res);
         });
+    }
+    function removerDatos(){
+        chat.remove({},function(){
+            socket.emit('borrar');
+        })
     }
     
     //console.log(io.sockets.sockets.length);
@@ -83,7 +83,7 @@ function newConnection(socket) {
             //you can do whatever you need with this
             //clientSocket.emit('new event', "Updates");
             //nombreClientes.push(clientSocket.id);*/
-            console.log("arreglo de clientes " + nombreClientes);
+          //  console.log("arreglo de clientes " + nombreClientes);
 
 
         }
@@ -92,12 +92,12 @@ function newConnection(socket) {
         io.to(room).emit('actualizar usuarios', nombreClientes);
     });
     socket.on('disconnect', function () {
-        nombreClientes = nombreClientes.filter(item => item !== socket.id);
+        nombreClientes = nombreClientes.filter(item => item !== socket.username);
         io.to(roomLocal).emit('actualizar usuarios', nombreClientes);
         //console.log('user disconnected '+socket.id);
     });
     socket.on('mouse', (data) => {
-        console.log(data);
+        //console.log(data);
         socket.broadcast.emit('mouse', data);
     });
     socket.on('borrar',(data)=>{
@@ -109,7 +109,7 @@ function newConnection(socket) {
     socket.on('mensaje chat', (msg) => {
         let nombre = socket.username;
         let mensaje = msg;
-        chat.insert({ nombre: nombre, mensaje: mensaje }, function () {
+        chat.insert({ usuario: nombre, mensaje: mensaje }, function () {
             io.emit('mensaje chat', {
                 usuario: nombre,
                 mensaje: mensaje
@@ -124,7 +124,12 @@ function newConnection(socket) {
 
     });
     socket.on('ingresar usuario',(data)=>{
+        
         socket.username = data;
+        console.log("dar mensajes al ingresar");
+        mostrarDatos();
+        
+
     });
     /*codigo para la base de datos*/
     sendStatus = function (s) {

@@ -2,44 +2,29 @@ body{
     color:#fff;
     font-family: 'Nunito Semibold';
     text-align:center;
+    overflow: auto;
+}
+#encabezado{
+    height: 50px;
 
 }
+.contenedor{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-auto-rows: minmax(100px,auto);
+    grid-auto-columns: minmax(600px,auto);
+    grid-template-areas: 'encabezado encabezado encabezado encabezado encabezado encabezado encabezado encabezado'
+    'dibujo dibujo dibujo dibujo dibujo dibujo dibujo dibujo'
+    'dibujo dibujo dibujo dibujo dibujo dibujo dibujo dibujo'
+    'chat chat chat chat  chat chat usuarios usuarios '
+    'input input input input input input input input'
+    'pie pie pie pie pie pie pie pie'
+    ;
+    grid-gap:10px;
+    max-width: 100%;
+    margin: 0 auto;
+}
 
-.contenedor{
-    display: grid;
-    grid-template-columns: repeat(6,1fr);
-    grid-auto-rows: minmax(100px,auto);
-    grid-auto-columns: minmax(600px,auto);
-    grid-template-areas: 'encabezado encabezado encabezado encabezado encabezado encabezado'
-    'dibujo dibujo dibujo dibujo dibujo dibujo'
-    'dibujo dibujo dibujo dibujo dibujo dibujo'
-    'chat chat chat chat  usuarios usuarios '
-    'chat chat chat chat  usuarios usuarios '
-    
-    'input input input input input input'
-    'pie pie pie pie pie pie'
-    ;
-    grid-gap:10px;
-    max-width: 90%;
-    margin: 0 auto;
-}
-@media screen and (min-width:1500px){
-.contenedor{
-    display: grid;
-    grid-template-columns: repeat(6,1fr);
-    grid-auto-rows: minmax(100px,auto);
-    grid-auto-columns: minmax(600px,auto);
-    grid-template-areas: 'encabezado encabezado encabezado encabezado encabezado encabezado'
-    'dibujo dibujo dibujo  chat chat usuarios'
-    'dibujo dibujo dibujo  chat chat usuarios'
-    'dibujo dibujo dibujo  input input usuarios'
-    'pie pie pie pie pie pie'
-    ;
-    grid-gap:10px;
-    max-width: 90%;
-    margin: 0 auto;
-}
-}
 
 .contenedor > *{
     
@@ -61,26 +46,30 @@ body{
     /* grid-column: 1/9;*/
     padding: 0;
     grid-area: chat;
-    height: 200px;
+    height: 130px;
     overflow: auto;
  }
-@media screen and (min-width:1500px){
-#chat{
-   /* grid-column: 1/9;*/
-   padding: 0;
-   grid-area: chat;
-   height: 400px;
-   overflow: auto;
+ #usuarios{
+    grid-area: usuarios; 
+    position: relative;
+   
+    padding: 0;
+    height: 130px;
+    overflow: auto;
+    
+}
+ td{
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+ }
 
-}
-}
 #input{
     /*grid-column: 9/13;*/
     display: grid;
     grid-template-columns: repeat(5,1fr);
-  
     grid-area: input;
-    height: 200px;
+    height: 101px;
     padding: 0%;
 }
 
@@ -91,32 +80,15 @@ body{
     grid-column: span 1;
 }
 #input > *{
-    margin: 60px 0px 60px 0px;
+    margin: 0px 0px 0px 0px;
 }
 #pie{
     /*grid-column: 1/13;*/
     
     grid-area: pie;
 }
-#usuarios{
-    grid-area: usuarios; 
-    
-   
-    padding: 0;
-    height: 200px;
-    overflow: auto;
-    
-}
-@media screen and (min-width:1500px){
-#usuarios{
-    grid-area: usuarios; 
-    
-    height: initial;
-    height: 600px;
-    overflow: auto;
-    
-}
-}
+
+
 tr{
     background-color:#757575;
     color: white;
@@ -142,4 +114,75 @@ td:nth-child(2n+0){
 }
 .secundarioClaro{
     background-color: #FFA726;
+}
+ul{list-style-type: none;
+text-align: left;
+padding-left: 10px;
+}
+#Contenedorentrar{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+#entrar{
+    background: red;
+    font-size: 25px;
+    margin-top: 2%;
+}
+#ingresarUsuario{
+    width: 95%;
+    margin: 0;
+    padding: 0;
+}
+@media screen and (min-width:1500px){
+    .contenedor{
+        display: grid;
+        grid-template-columns: repeat(8,1fr);
+        grid-auto-rows: minmax(100px,auto);
+        grid-auto-columns: minmax(600px,auto);
+        grid-template-areas: 'encabezado encabezado encabezado encabezado encabezado encabezado encabezado encabezado'
+        'dibujo dibujo chat chat chat chat usuarios usuarios'
+        'dibujo dibujo chat chat chat chat usuarios usuarios'
+        'dibujo dibujo input input input input usuarios usuarios'
+        'pie pie pie pie pie pie pie pie'
+        ;
+        grid-gap:10px;
+        max-width: 90%;
+        margin: 0 auto;
+    }
+    #chat{
+       /* grid-column: 1/9;*/
+       padding: 0;
+       grid-area: chat;
+       height: 400px;
+       overflow: auto;
+    
+    }
+    #usuarios{
+        grid-area: usuarios; 
+        height: initial;
+        height: 600px;
+        overflow: auto;
+        
+    }
+    #input{
+        /*grid-column: 9/13;*/
+        display: grid;
+        grid-template-columns: repeat(5,1fr);
+        grid-area: input;
+        height: 200px;
+        padding: 0%;
+    }
+    #input > *{
+        margin: 60px 0px 60px 0px;
+    }
+    #ingresarUsuario{
+        width: 95%;
+        margin: 0;
+        padding: 0;
+    }
+    ul{list-style-type: none;
+        text-align: center;
+        
+        }
 }

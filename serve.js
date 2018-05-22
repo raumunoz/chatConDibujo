@@ -7,14 +7,15 @@ const MongoClient = require('mongodb').MongoClient;
 
 const assert = require('assert');
 let app = express();
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 5000;
 let server = app.listen(port);
 let io = socket(server);
+let localhost=process.env.HOST;
 //nombre y url de la base de datos
 //const url = 'mongodb://127.0.0.1/websockets';
-const url = 'mongodb://chatderau.herokuapp.com/websockets';
+const url = process.env.MongodbUri;
 const dbName = 'mongoChat';
-
+console.log("host local"+process.env.HOST);
 let clients;
 let numClients;
 let nombreClientes = [];
@@ -24,14 +25,14 @@ let chat;
 
 app.use(express.static('public'));
 io.sockets.on('connection', newConnection);
-
+/*exportar el nombre del localhost */
 
 
 //io.sockets.on('')
 function newConnection(socket) {
 
     /*socket id es la id de la conexion */
-    //console.log('new connection: ' + socket.id);
+    console.log('new connection: ' + socket.id);
     socket.emit('usuario local', socket.id);
     socket.emit('connection');
     /*numero de clientes */
@@ -66,7 +67,7 @@ function newConnection(socket) {
     socket.on('unir chat', (room) => {
         nombreClientes = [];
         roomLocal = room;
-        //console.log("se quiere unir " + room);
+        console.log("se quiere unir " + room);
         socket.join(room);
         clients = io.sockets.adapter.rooms[room].sockets;
         numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;

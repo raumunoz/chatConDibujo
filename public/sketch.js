@@ -1,3 +1,4 @@
+
 let socket;
 let myCanvas;
 let mensajeAenviar;
@@ -14,7 +15,11 @@ let btnEntrar;
 let ingresearUsuario;
 let Contenedorentrar;
 
+
 function setup() {
+    
+      console.log("direccion ---"+window.location.hostname);
+      
 document.getElementById("Itexto").disabled = true;
 document.getElementById("IbottonEnviar").disabled=true;
 room='chat1';
@@ -42,7 +47,9 @@ myCanvas.mouseOut(()=>{
 //myCanvas.mouseMoved(dibuja);
 background(51);
 //socket=io.connect('http://localhost:3000/');
-socket=io.connect('https://chatderau.herokuapp.com/');
+//||'https://chatderau.herokuapp.com/'
+console.log("direcion href ++++"+ window.location.href);
+socket=io.connect(localhost(window.location.href));
 socket.on('mouse', newDrw);
 socket.on('mensaje chat',agregarMensaje);
 socket.on('usuario local',definirUsuarioLocal);
@@ -180,6 +187,16 @@ function mensajesPrevios(data){
         }
         
    
+}
+function localhost(local){
+    let address;
+    if(local=='localhost'){
+        address='http://'+local+":5000/"
+    }else{
+        return address;
+    }
+    console.log("direcion arreglada "+ address);
+    return address;
 }
 
 /*function agregarMensaje(data){

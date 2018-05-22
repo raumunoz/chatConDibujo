@@ -4,7 +4,7 @@ console.log("mi servidor de server está corriendo");
 let express = require('express');
 let socket = require('socket.io');
 const MongoClient = require('mongodb').MongoClient;
-require('dotenv').config();
+
 const assert = require('assert');
 let app = express();
 let port = process.env.PORT || 5000;
@@ -12,9 +12,8 @@ let server = app.listen(port);
 let io = socket(server);
 let localhost=process.env.HOST;
 //nombre y url de la base de datos
-
+//const url = 'mongodb://127.0.0.1/websockets';
 const url = process.env.MongodbUri;
-
 const dbName = 'mongochat';
 console.log("host local"+process.env.HOST);
 let clients;

@@ -35,6 +35,7 @@ myCanvas.mousePressed(()=>{
     document.body.style.overflow="hidden";
     canvasPrecionado=true;
     //console.log("el mause se preciono");
+    
 });
 myCanvas.mouseReleased(()=>{
     //console.log("el mause se soltó");

@@ -3,6 +3,8 @@ body{
     font-family: 'Nunito Semibold';
     text-align:center;
     overflow: auto;
+    height: 100%;
+    margin: 0;
 }
 #encabezado{
     height: 50px;
@@ -41,6 +43,8 @@ body{
     grid-row:2/4;*/
     padding: 0;
     grid-area: dibujo;
+    background: #fff;
+    min-height: 100%; 
 }
 #chat{
     /* grid-column: 1/9;*/
@@ -97,11 +101,15 @@ th{
     background-color:gold;
 }
 tr:nth-child(2n+0) {
-    background: #E0E0E0;
+    background: rgb(224, 224, 224);
     color: black;
+}
+td:nth-child(2n+1){
+    max-width: 150px;
 }
 td:nth-child(2n+0){
     width: 20%;
+    
 }
 .primario{
     background-color: #00695C;

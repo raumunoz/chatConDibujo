@@ -34,6 +34,7 @@ myCanvas.mousePressed(()=>{
     document.body.style.overflow="hidden";
     canvasPrecionado=true;
     //console.log("el mause se preciono");
+    
 });
 myCanvas.mouseReleased(()=>{
     //console.log("el mause se soltó");
@@ -113,9 +114,7 @@ function enviarMensaje(){
     let mensaje=document.getElementById('Itexto').value;
 
     if (mensaje!='') {
-        if(mensaje.length>23){
-            mensaje=separarCadena(23,mensaje)
-        }
+        
         //console.log("mensaje a enviar "+ mensaje);
         //let row = tablaChat.insertRow(0);
        /* let row=tablaChat.insertRow(tablaChat.rows.length );
@@ -138,7 +137,7 @@ function agregarMensaje(datos){
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
         cell1.innerHTML = datos.mensaje;
-        cell2.innerHTML = datos.usuario.substring(0,6);
+        cell2.innerHTML = datos.usuario.substring(0,7);
         //divChat.scrollTop=0;  
         divChat.scrollTop = divChat.scrollHeight;
        

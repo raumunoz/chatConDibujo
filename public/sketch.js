@@ -113,9 +113,7 @@ function enviarMensaje(){
     let mensaje=document.getElementById('Itexto').value;
 
     if (mensaje!='') {
-        if(mensaje.length>12){
-            mensaje=separarCadena(12,mensaje)
-        }
+        
         //console.log("mensaje a enviar "+ mensaje);
         //let row = tablaChat.insertRow(0);
        /* let row=tablaChat.insertRow(tablaChat.rows.length );
@@ -137,7 +135,7 @@ function agregarMensaje(datos){
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
         cell1.innerHTML = datos.mensaje;
-        cell2.innerHTML = datos.usuario.substring(0,6);
+        cell2.innerHTML = datos.usuario.substring(0,7);
         //divChat.scrollTop=0;  
         divChat.scrollTop = divChat.scrollHeight;
        

@@ -16,9 +16,9 @@
 <body>
 
     <div class="contenedor">
-        <div id="encabezado" class="primario"><h1>chat con dibujo</h1></div>
+        <div id="encabezado" class="primario"><h1>Chat con dibujo</h1></div>
         <div id="dibujo" class="primarioClaro">
-            <div><input type="button" value="guardar" id="IbottonGuardar" onclick="guardarImagen();"></div>
+            <div><input type="button" value="guardar imagen" id="IbottonGuardar" onclick="guardarImagen();"></div>
             <div id="canvasDibujo" ></div>
             
             
@@ -30,14 +30,14 @@
             </table>
         </div>
         <div id="input" class="primarioClaro">
-            <textarea rows="4" cols="10" id="Itexto" ></textarea>
+            <textarea rows="3" cols="20" id="Itexto" maxlength="170" wrap="hard">ingresa usuario para escribir</textarea>
             <input type="button" value="enviar" id="IbottonEnviar" onclick="enviarMensaje();">
         </div>
         <div id="usuarios" class="secundarioClaro">
         <ul id="listaUsuarios">
         </ul>
         <div id="Contenedorentrar">
-            <input type="text" id="ingresarUsuario" placeholder="Usuario">
+            <input type="text" id="ingresarUsuario" placeholder="nuevo user">
             <div id="entrar" onclick="nuevoUsuario()">⍈</div>
         </div>
         </div>

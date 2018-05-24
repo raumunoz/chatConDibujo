@@ -5,7 +5,7 @@ let mensajeAenviar;
 let tablaChat;
 let divChat;
 let ulUsuarios;
-
+let status;
 let li;
 let h1;
 let nombreUsuario;
@@ -17,9 +17,8 @@ let Contenedorentrar;
 
 
 function setup() {
-    
-      console.log("direccion ---"+window.location.hostname);
-      
+status=false;   
+console.log("direccion ---"+window.location.hostname);
 document.getElementById("Itexto").disabled = true;
 document.getElementById("IbottonEnviar").disabled=true;
 room='chat1';
@@ -56,6 +55,7 @@ socket.on('usuario local',definirUsuarioLocal);
 socket.on('connection',unirAchat);
 socket.on('salida',mensajesPrevios);
 socket.on('actualizar usuarios',actualizarUlUsuarios);
+socket.on('status',funcionStatus)
 /*socket.on('salida',function(data){
     console.log(data);
 });*/
@@ -113,8 +113,8 @@ function enviarMensaje(){
     let mensaje=document.getElementById('Itexto').value;
 
     if (mensaje!='') {
-        if(mensaje.length>12){
-            mensaje=separarCadena(12,mensaje)
+        if(mensaje.length>23){
+            mensaje=separarCadena(23,mensaje)
         }
         //console.log("mensaje a enviar "+ mensaje);
         //let row = tablaChat.insertRow(0);
@@ -126,6 +126,7 @@ function enviarMensaje(){
         //divChat.scrollTop=0;  
         divChat.scrollTop = divChat.scrollHeight;*/
         socket.emit('mensaje chat',mensaje);
+        document.getElementById("Itexto").value="";
     }
 }
 function agregarMensaje(datos){
@@ -169,11 +170,17 @@ function nuevoUsuario(){
     if(ingresearUsuario.value == ""){
         alert('ingresa un usario');
     }else{
-        document.getElementById("Itexto").disabled = false;
-        document.getElementById("IbottonEnviar").disabled=false;
         socket.emit('ingresar usuario',ingresearUsuario.value);
-        socket.emit('unir chat', room);
-        Contenedorentrar.style.display = "none";  
+        console.log("el usuario "+ status);
+        if(status){
+            console.log("el usuario "+ status);
+            document.getElementById("Itexto").disabled = false;
+            document.getElementById("IbottonEnviar").disabled=false;
+            socket.emit('unir chat', room);
+            Contenedorentrar.style.display = "none";  
+        }else{
+            document.getElementById("Itexto").value="ya existe ese usuario";
+        }
     }
 }
 function mensajesPrevios(data){
@@ -197,6 +204,11 @@ function localhost(local){
     }
     console.log("direcion arreglada "+ address);
     return address;
+}
+function funcionStatus (data){
+    console.log("el usario existe "+data);
+    status=data;
+
 }
 
 /*function agregarMensaje(data){

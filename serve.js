@@ -20,6 +20,7 @@ let numClients;
 let nombreClientes = [];
 let roomLocal;
 let chat;
+let status=false;
 /*para hostear static files */
 
 app.use(express.static('public'));
@@ -32,7 +33,6 @@ function newConnection(socket) {
 
     /*socket id es la id de la conexion */
     console.log('new connection: ' + socket.id);
-    socket.emit('usuario local', socket.id);
     socket.emit('connection');
     /*numero de clientes */
     /*para conectar ala base de datos */
@@ -49,7 +49,7 @@ function newConnection(socket) {
     function mostrarDatos(){
         chat.find().limit(100).sort({_id:1}).toArray(function(err,res){
             assert.equal(err,null);
-            console.log("datos a enviar"+res);
+            //console.log("datos a enviar"+res);
             socket.emit('salida',res);
         });
     }
@@ -64,33 +64,33 @@ function newConnection(socket) {
     // socket.emit('usario',socket.id);
 
     socket.on('unir chat', (room) => {
-        nombreClientes = [];
-        roomLocal = room;
-        console.log("se quiere unir " + room);
-        socket.join(room);
-        clients = io.sockets.adapter.rooms[room].sockets;
-        numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
-        //console.log("Numero de clientes " + numClients);
-        for (var clientId in clients) {
-            //console.log("cliente id " + clientId);
-            //this is the socket of each client in the room.
-            var clientSocket = io.sockets.connected[clientId];
-            
-                console.log("nombre de usarui es -----------------"+clientSocket.username);
-           
-            
-            nombreClientes.push(clientSocket.username);
-            //console.log("clientes "+clientSocket.id);
-            //you can do whatever you need with this
-            //clientSocket.emit('new event', "Updates");
-            //nombreClientes.push(clientSocket.id);*/
-          //  console.log("arreglo de clientes " + nombreClientes);
+        if (status) {
+            nombreClientes = [];
+            roomLocal = room;
+            console.log("se quiere unir " + room);
+            socket.join(room);
+            clients = io.sockets.adapter.rooms[room].sockets;
+            numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
+            //console.log("Numero de clientes " + numClients);
+            for (var clientId in clients) {
+                //console.log("cliente id " + clientId);
+                //this is the socket of each client in the room.
+                var clientSocket = io.sockets.connected[clientId];
+
+                console.log("nombre de usarui es -----------------" + clientSocket.username);
 
 
+                nombreClientes.push(clientSocket.username);
+                //console.log("clientes "+clientSocket.id);
+                //you can do whatever you need with this
+                //clientSocket.emit('new event', "Updates");
+                //nombreClientes.push(clientSocket.id);*/
+                //  console.log("arreglo de clientes " + nombreClientes);
+
+
+            }
+            io.to(room).emit('actualizar usuarios', nombreClientes);
         }
-
-
-        io.to(room).emit('actualizar usuarios', nombreClientes);
     });
     socket.on('disconnect', function () {
         nombreClientes = nombreClientes.filter(item => item !== socket.username);
@@ -125,11 +125,24 @@ function newConnection(socket) {
 
     });
     socket.on('ingresar usuario',(data)=>{
-        
-        socket.username = data;
-        console.log("dar mensajes al ingresar");
-        mostrarDatos();
-        
+        if(!nombreClientes.length==0){
+            if(nombreClientes.includes(data)==false){
+                console.log("dar mensajes al ingresar");
+                socket.username = data;
+                 status=true;
+                 mostrarDatos();
+                sendStatus(false);
+            }else{
+                status=true;
+                
+                sendStatus(false);
+            }
+        }else{
+            socket.username = data;
+            status=true;
+            mostrarDatos();
+            sendStatus(true);
+        }
 
     });
     /*codigo para la base de datos*/

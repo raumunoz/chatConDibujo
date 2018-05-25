@@ -43,7 +43,6 @@ body{
     grid-row:2/4;*/
     padding: 0;
     grid-area: dibujo;
-    background: #fff;
     min-height: 100%; 
 }
 #chat{
@@ -91,7 +90,9 @@ body{
     
     grid-area: pie;
 }
-
+textarea {
+    resize: none;
+}
 
 tr{
     background-color:#757575;

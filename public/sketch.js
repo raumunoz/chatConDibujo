@@ -170,16 +170,6 @@ function nuevoUsuario(){
         alert('ingresa un usario');
     }else{
         socket.emit('ingresar usuario',ingresearUsuario.value);
-        console.log("el usuario "+ status);
-        if(status){
-            console.log("el usuario "+ status);
-            document.getElementById("Itexto").disabled = false;
-            document.getElementById("IbottonEnviar").disabled=false;
-            socket.emit('unir chat', room);
-            Contenedorentrar.style.display = "none";  
-        }else{
-            document.getElementById("Itexto").value="ya existe ese usuario";
-        }
     }
 }
 function mensajesPrevios(data){
@@ -205,9 +195,17 @@ function localhost(local){
     return address;
 }
 function funcionStatus (data){
-    console.log("el usario existe "+data);
+    console.log("estatus desde el servidor "+data);
     status=data;
-
+    if(status){
+        console.log("el estatus local es "+ status);
+        document.getElementById("Itexto").disabled = false;
+        document.getElementById("IbottonEnviar").disabled=false;
+        socket.emit('unir chat', room);
+        Contenedorentrar.style.display = "none";  
+    }else{
+        document.getElementById("Itexto").value="ya existe ese usuario";
+    }
 }
 
 /*function agregarMensaje(data){

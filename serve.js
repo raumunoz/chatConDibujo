@@ -14,7 +14,7 @@ let localhost=process.env.HOST;
 
 const url = process.env.MongodbUri;
 const dbName = 'mongochat';
-console.log("host local"+process.env.HOST);
+
 let clients;
 let numClients;
 let nombreClientes = [];
@@ -32,7 +32,6 @@ io.sockets.on('connection', newConnection);
 function newConnection(socket) {
 
     /*socket id es la id de la conexion */
-    console.log('new connection: ' + socket.id);
     socket.emit('connection');
     /*numero de clientes */
     /*para conectar ala base de datos */
@@ -67,18 +66,13 @@ function newConnection(socket) {
         if (status) {
             nombreClientes = [];
             roomLocal = room;
-            console.log("se quiere unir " + room);
             socket.join(room);
             clients = io.sockets.adapter.rooms[room].sockets;
             numClients = (typeof clients !== 'undefined') ? Object.keys(clients).length : 0;
-            //console.log("Numero de clientes " + numClients);
             for (var clientId in clients) {
                 //console.log("cliente id " + clientId);
                 //this is the socket of each client in the room.
                 var clientSocket = io.sockets.connected[clientId];
-
-                console.log("nombre de usarui es -----------------" + clientSocket.username);
-
 
                 nombreClientes.push(clientSocket.username);
                 //console.log("clientes "+clientSocket.id);
@@ -116,32 +110,28 @@ function newConnection(socket) {
                 mensaje: mensaje
                 
             });
-            sendStatus({
-                message: "mesage sent",
-                clear: true
-            });
 
-        })
+        });
 
     });
     socket.on('ingresar usuario',(data)=>{
-        if(!nombreClientes.length==0){
-            if(nombreClientes.includes(data)==false){
-                console.log("dar mensajes al ingresar");
-                socket.username = data;
-                 status=true;
-                 mostrarDatos();
-                sendStatus(false);
-            }else{
-                status=true;
-                
-                sendStatus(false);
-            }
-        }else{
+        if(nombreClientes.length==0){
             socket.username = data;
+            sendStatus(true);
             status=true;
             mostrarDatos();
-            sendStatus(true);
+        }else{
+             if(nombreClientes.includes(data)==false){
+                socket.username = data;
+                sendStatus(true);
+                 status=true;
+                 mostrarDatos();
+                
+            }else{
+                status=false;
+                sendStatus(false);
+            }
+           
         }
 
     });
